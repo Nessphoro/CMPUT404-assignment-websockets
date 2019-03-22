@@ -26,6 +26,7 @@ app = Flask(__name__)
 sockets = Sockets(app)
 app.debug = True
 
+# code from examples
 clients = list()
 
 def send_all(msg, c):
@@ -93,6 +94,8 @@ class World:
 myWorld = World()        
 
 def set_listener( entity, data, client = None):
+    # path is set don't send it back to where it came from
+    # makes life easy
     if "path" in data:
         send_all_json({
             "{0}".format(entity): data
@@ -109,6 +112,7 @@ def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
     return redirect("/static/index.html")
 
+# your code
 def read_ws(ws, client):
     '''A greenlet function that reads from the websocket and updates the world'''
     try:
@@ -122,6 +126,7 @@ def read_ws(ws, client):
     except:
         '''Done'''
 
+#also your code
 @sockets.route('/subscribe')
 def subscribe_socket(ws):
     '''Fufill the websocket URL of /subscribe, every update notify the
